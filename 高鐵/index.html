@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>高鐵自動訂票設定</title>
+<style>
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 52px;
+    height: 28px;
+    margin-top: 6px;
+  }
+
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+
+  .switch input:checked + .slider {
+    background-color: #ff6600;
+  }
+
+  .switch input:checked + .slider:before {
+    transform: translateX(24px);
+  }
+
+  .switch-label {
+    display: block;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    padding: 15px;
+    background: #f9f9f9;
+  }
+
+  .container {
+    width: 330px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-sizing: border-box;
+  }
+
+  label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+
+  input,
+  select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+
+  .time-range {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .time-range label {
+    margin-top: 0;
+  }
+
+  button {
+    margin-top: 15px;
+    width: 100%;
+    padding: 10px;
+    background: #ff6600;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>高鐵自動訂票設定</h2>
+
+  <label class="switch-label">啟用自動訂票</label>
+  <label class="switch">
+    <input type="checkbox" id="autoMode">
+    <span class="slider"></span>
+  </label>
+
+  <label for="date">日期</label>
+  <input type="date" id="date">
+
+  <div class="time-range">
+    <div>
+      <label for="time">最早出發</label>
+      <select id="time"></select>
+    </div>
+    <div>
+      <label for="latestTime">最晚出發</label>
+      <select id="latestTime"></select>
+    </div>
+  </div>
+
+  <label for="start">起程站</label>
+  <select id="start">
+    <option value="">請選擇</option>
+    <option value="1">南港</option>
+    <option value="2">台北</option>
+    <option value="3">板橋</option>
+    <option value="4">桃園</option>
+    <option value="5">新竹</option>
+    <option value="6">苗栗</option>
+    <option value="7">台中</option>
+    <option value="8">彰化</option>
+    <option value="9">雲林</option>
+    <option value="10">嘉義</option>
+    <option value="11">台南</option>
+    <option value="12">左營</option>
+  </select>
+
+  <label for="end">到達站</label>
+  <select id="end">
+    <option value="">請選擇</option>
+    <option value="1">南港</option>
+    <option value="2">台北</option>
+    <option value="3">板橋</option>
+    <option value="4">桃園</option>
+    <option value="5">新竹</option>
+    <option value="6">苗栗</option>
+    <option value="7">台中</option>
+    <option value="8">彰化</option>
+    <option value="9">雲林</option>
+    <option value="10">嘉義</option>
+    <option value="11">台南</option>
+    <option value="12">左營</option>
+  </select>
+
+  <label for="ticketType">票種</label>
+  <select id="ticketType">
+    <option value="F">全票</option>
+    <option value="H">孩童票</option>
+    <option value="W">敬老票 / 愛心票</option>
+    <option value="E">大學生票</option>
+    <option value="P">早鳥票</option>
+  </select>
+
+  <label for="count">張數</label>
+  <input id="count" type="number" value="1" min="1" max="10">
+
+  <label for="p1_id">乘客 1 身分證字號</label>
+  <input id="p1_id" type="text">
+
+  <label for="p2_id">乘客 2 身分證字號</label>
+  <input id="p2_id" type="text">
+
+  <button id="saveBtn">儲存設定</button>
+</div>
+
+<script src="index.js"></script>
+</body>
+</html>
