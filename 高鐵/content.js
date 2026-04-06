@@ -105,7 +105,7 @@ function startAutoBooking(hsrSetting) {
         
         setTimeout(() => {
           window.location.reload();
-        }, 20000);
+        }, 150000);//第二步
       }
 
       return false;
@@ -192,7 +192,7 @@ function startAutoBooking(hsrSetting) {
         if (secInput.value.trim() !== "") {
           submitBtn.click();
         }
-      }, 20000);
+      }, 150000);//第一步 按查詢
     }
 
     const waitCaptcha = setInterval(() => {
