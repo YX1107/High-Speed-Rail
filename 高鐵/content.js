@@ -1,3 +1,4 @@
+//asa
 chrome.storage.sync.get("hsrSetting", ({ hsrSetting }) => {
   if (!hsrSetting || !hsrSetting.autoMode) {
     console.log("Auto booking is disabled.");
