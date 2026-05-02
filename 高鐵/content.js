@@ -106,7 +106,7 @@ function startAutoBooking(hsrSetting) {
     });
 
     if (!matchingRadios.length) {
-      console.warn("瘝?蝚血???甈⊥??泵??頠活.", {
+      console.warn("目前沒有符合時間範圍的班次。", {
         earliest: hsrSetting.time || null,
         latest: hsrSetting.latestTime || null
       });
