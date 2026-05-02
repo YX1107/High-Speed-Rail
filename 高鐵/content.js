@@ -11,6 +11,8 @@ chrome.storage.sync.get("hsrSetting", ({ hsrSetting }) => {
 
 function startAutoBooking(hsrSetting) {
   let reloadScheduled = false;
+  const step1QueryIntervalMs = toDelayMs(hsrSetting.step1QuerySeconds, 150);
+  const step2ReloadDelayMs = toDelayMs(hsrSetting.step2ReloadSeconds, 150);
 
   const timeMap = {
     "00:00": "1201A",
@@ -62,6 +64,15 @@ function startAutoBooking(hsrSetting) {
     return (hours * 60) + minutes;
   }
 
+  function toDelayMs(secondsValue, fallbackSeconds) {
+    const seconds = Number.parseInt(secondsValue, 10);
+    const normalizedSeconds = Number.isFinite(seconds) && seconds > 0
+      ? seconds
+      : fallbackSeconds;
+
+    return normalizedSeconds * 1000;
+  }
+
   function applyTHSRTime(uiTime) {
     const value = timeMap[uiTime];
     if (!value) return;
@@ -95,18 +106,17 @@ function startAutoBooking(hsrSetting) {
     });
 
     if (!matchingRadios.length) {
-      
-      console.warn("沒有符合的車次沒有符合的車次.", {
+      console.warn("瘝?蝚血???甈⊥??泵??頠活.", {
         earliest: hsrSetting.time || null,
         latest: hsrSetting.latestTime || null
       });
 
       if (!reloadScheduled) {
         reloadScheduled = true;
-        
+
         setTimeout(() => {
           window.location.reload();
-        }, 150000);//第二步
+        }, step2ReloadDelayMs);//蝚砌?甇?
       }
 
       return false;
@@ -193,7 +203,7 @@ function startAutoBooking(hsrSetting) {
         if (secInput.value.trim() !== "") {
           submitBtn.click();
         }
-      }, 150000);//第一步 按查詢
+      }, step1QueryIntervalMs);//蝚砌?甇??閰?
     }
 
     const waitCaptcha = setInterval(() => {

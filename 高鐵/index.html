@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<title>高鐵自動訂票設定</title>
+<title>&#39640;&#37941;&#33258;&#21205;&#35330;&#31080;&#35373;&#23450;</title>
 <style>
   .switch {
     position: relative;
@@ -82,13 +82,15 @@
     box-sizing: border-box;
   }
 
-  .time-range {
+  .time-range,
+  .reload-range {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
   }
 
-  .time-range label {
+  .time-range label,
+  .reload-range label {
     margin-top: 0;
   }
 
@@ -106,81 +108,92 @@
 </head>
 <body>
 <div class="container">
-  <h2>高鐵自動訂票設定</h2>
+  <h2>&#39640;&#37941;&#33258;&#21205;&#35330;&#31080;&#35373;&#23450;</h2>
 
-  <label class="switch-label">啟用自動訂票</label>
+  <label class="switch-label">&#21855;&#29992;&#33258;&#21205;&#35330;&#31080;</label>
   <label class="switch">
     <input type="checkbox" id="autoMode">
     <span class="slider"></span>
   </label>
 
-  <label for="date">日期</label>
+  <label for="date">&#26085;&#26399;</label>
   <input type="date" id="date">
 
   <div class="time-range">
     <div>
-      <label for="time">最早出發</label>
+      <label for="time">&#26368;&#26089;&#20986;&#30332;</label>
       <select id="time"></select>
     </div>
     <div>
-      <label for="latestTime">最晚出發</label>
+      <label for="latestTime">&#26368;&#26202;&#20986;&#30332;</label>
       <select id="latestTime"></select>
     </div>
   </div>
 
-  <label for="start">起程站</label>
+  <div class="reload-range">
+    <div>
+      <label for="step1QuerySeconds">&#31532;&#19968;&#27493;&#25353;&#26597;&#35426;&#31186;&#25976;</label>
+      <input id="step1QuerySeconds" type="number" value="150" min="1">
+    </div>
+    <div>
+      <label for="step2ReloadSeconds">&#31532;&#20108;&#27493;&#37325;&#25972;&#31186;&#25976;</label>
+      <input id="step2ReloadSeconds" type="number" value="150" min="1">
+    </div>
+  </div>
+
+  <label for="start">&#36215;&#31243;&#31449;</label>
   <select id="start">
-    <option value="">請選擇</option>
-    <option value="1">南港</option>
-    <option value="2">台北</option>
-    <option value="3">板橋</option>
-    <option value="4">桃園</option>
-    <option value="5">新竹</option>
-    <option value="6">苗栗</option>
-    <option value="7">台中</option>
-    <option value="8">彰化</option>
-    <option value="9">雲林</option>
-    <option value="10">嘉義</option>
-    <option value="11">台南</option>
-    <option value="12">左營</option>
+    <option value="">&#35531;&#36984;&#25799;</option>
+    <option value="1">&#21335;&#28207;</option>
+    <option value="2">&#21488;&#21271;</option>
+    <option value="3">&#26495;&#27211;</option>
+    <option value="4">&#26691;&#22290;</option>
+    <option value="5">&#26032;&#31481;</option>
+    <option value="6">&#33495;&#26647;</option>
+    <option value="7">&#21488;&#20013;</option>
+    <option value="8">&#24432;&#21270;</option>
+    <option value="9">&#38642;&#26519;</option>
+    <option value="10">&#22025;&#32681;</option>
+    <option value="11">&#21488;&#21335;</option>
+    <option value="12">&#24038;&#29151;</option>
   </select>
 
-  <label for="end">到達站</label>
+  <label for="end">&#21040;&#36948;&#31449;</label>
   <select id="end">
-    <option value="">請選擇</option>
-    <option value="1">南港</option>
-    <option value="2">台北</option>
-    <option value="3">板橋</option>
-    <option value="4">桃園</option>
-    <option value="5">新竹</option>
-    <option value="6">苗栗</option>
-    <option value="7">台中</option>
-    <option value="8">彰化</option>
-    <option value="9">雲林</option>
-    <option value="10">嘉義</option>
-    <option value="11">台南</option>
-    <option value="12">左營</option>
+    <option value="">&#35531;&#36984;&#25799;</option>
+    <option value="1">&#21335;&#28207;</option>
+    <option value="2">&#21488;&#21271;</option>
+    <option value="3">&#26495;&#27211;</option>
+    <option value="4">&#26691;&#22290;</option>
+    <option value="5">&#26032;&#31481;</option>
+    <option value="6">&#33495;&#26647;</option>
+    <option value="7">&#21488;&#20013;</option>
+    <option value="8">&#24432;&#21270;</option>
+    <option value="9">&#38642;&#26519;</option>
+    <option value="10">&#22025;&#32681;</option>
+    <option value="11">&#21488;&#21335;</option>
+    <option value="12">&#24038;&#29151;</option>
   </select>
 
-  <label for="ticketType">票種</label>
+  <label for="ticketType">&#31080;&#31278;</label>
   <select id="ticketType">
-    <option value="F">全票</option>
-    <option value="H">孩童票</option>
-    <option value="W">愛心票</option>
-    <option value="E">敬老票</option>
-    <option value="P">大學生票</option>
+    <option value="F">&#20840;&#31080;</option>
+    <option value="H">&#23401;&#31461;&#31080;</option>
+    <option value="W">&#24859;&#24515;&#31080;</option>
+    <option value="E">&#25964;&#32769;&#31080;</option>
+    <option value="P">&#22823;&#23416;&#29983;&#31080;</option>
   </select>
 
-  <label for="count">張數</label>
+  <label for="count">&#24373;&#25976;</label>
   <input id="count" type="number" value="1" min="1" max="10">
 
-  <label for="p1_id">乘客 1 身分證字號</label>
+  <label for="p1_id">&#20056;&#23458; 1 &#36523;&#20998;&#35657;&#23383;&#34399;</label>
   <input id="p1_id" type="text">
 
-  <label for="p2_id">乘客 2 身分證字號</label>
+  <label for="p2_id">&#20056;&#23458; 2 &#36523;&#20998;&#35657;&#23383;&#34399;</label>
   <input id="p2_id" type="text">
 
-  <button id="saveBtn">儲存設定</button>
+  <button id="saveBtn">&#20786;&#23384;&#35373;&#23450;</button>
 </div>
 
 <script src="index.js"></script>

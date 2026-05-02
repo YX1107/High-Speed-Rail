@@ -12,6 +12,9 @@ const THSR_TIMES = [
   "23:00", "23:30"
 ];
 
+const DEFAULT_STEP_1_QUERY_SECONDS = 150;
+const DEFAULT_STEP_2_RELOAD_SECONDS = 150;
+
 function populateTimeSelect(selectId, placeholder) {
   const select = document.getElementById(selectId);
   select.innerHTML = "";
@@ -29,11 +32,20 @@ function populateTimeSelect(selectId, placeholder) {
   });
 }
 
-populateTimeSelect("time", "請選擇");
-populateTimeSelect("latestTime", "不限制");
+function normalizePositiveInt(value, fallback) {
+  const parsed = Number.parseInt(value, 10);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
+}
+
+populateTimeSelect("time", "\u8acb\u9078\u64c7");
+populateTimeSelect("latestTime", "\u4e0d\u9650\u5236");
 
 chrome.storage.sync.get("hsrSetting", ({ hsrSetting }) => {
-  if (!hsrSetting) return;
+  if (!hsrSetting) {
+    document.getElementById("step1QuerySeconds").value = DEFAULT_STEP_1_QUERY_SECONDS;
+    document.getElementById("step2ReloadSeconds").value = DEFAULT_STEP_2_RELOAD_SECONDS;
+    return;
+  }
 
   document.getElementById("autoMode").checked = !!hsrSetting.autoMode;
 
@@ -46,6 +58,15 @@ chrome.storage.sync.get("hsrSetting", ({ hsrSetting }) => {
   if (hsrSetting.count) document.getElementById("count").value = hsrSetting.count;
   if (hsrSetting.p1) document.getElementById("p1_id").value = hsrSetting.p1;
   if (hsrSetting.p2) document.getElementById("p2_id").value = hsrSetting.p2;
+
+  document.getElementById("step1QuerySeconds").value = normalizePositiveInt(
+    hsrSetting.step1QuerySeconds,
+    DEFAULT_STEP_1_QUERY_SECONDS
+  );
+  document.getElementById("step2ReloadSeconds").value = normalizePositiveInt(
+    hsrSetting.step2ReloadSeconds,
+    DEFAULT_STEP_2_RELOAD_SECONDS
+  );
 });
 
 function saveSetting() {
@@ -53,15 +74,29 @@ function saveSetting() {
   const latest = document.getElementById("latestTime").value;
 
   if (earliest && latest && earliest > latest) {
-    alert("最晚出發時間不能早於最早出發時間");
+    alert("\u6700\u665a\u51fa\u767c\u6642\u9593\u4e0d\u80fd\u65e9\u65bc\u6700\u65e9\u51fa\u767c\u6642\u9593\u3002");
     return false;
   }
+
+  const step1QuerySeconds = normalizePositiveInt(
+    document.getElementById("step1QuerySeconds").value,
+    DEFAULT_STEP_1_QUERY_SECONDS
+  );
+  const step2ReloadSeconds = normalizePositiveInt(
+    document.getElementById("step2ReloadSeconds").value,
+    DEFAULT_STEP_2_RELOAD_SECONDS
+  );
+
+  document.getElementById("step1QuerySeconds").value = step1QuerySeconds;
+  document.getElementById("step2ReloadSeconds").value = step2ReloadSeconds;
 
   const data = {
     autoMode: document.getElementById("autoMode").checked,
     date: document.getElementById("date").value,
     time: earliest,
     latestTime: latest,
+    step1QuerySeconds,
+    step2ReloadSeconds,
     start: document.getElementById("start").value,
     end: document.getElementById("end").value,
     ticketType: document.getElementById("ticketType").value,
@@ -71,7 +106,7 @@ function saveSetting() {
   };
 
   chrome.storage.sync.set({ hsrSetting: data }, () => {
-    console.log("高鐵設定已儲存", data);
+    console.log("\u8a2d\u5b9a\u5df2\u5132\u5b58\u3002", data);
   });
 
   return true;
@@ -79,7 +114,7 @@ function saveSetting() {
 
 document.getElementById("saveBtn").addEventListener("click", () => {
   if (!saveSetting()) return;
-  alert("設定已儲存");
+  alert("\u8a2d\u5b9a\u5df2\u5132\u5b58\u3002");
 });
 
 document.getElementById("autoMode").addEventListener("change", saveSetting);
