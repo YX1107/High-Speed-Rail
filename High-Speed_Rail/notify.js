@@ -4,7 +4,7 @@
   console.log("已啟用：偵測『完成訂位頁』並發送 Discord 通知");
 
   const webhookUrl =
-    "";
+    "dc webhookUrl";
 
   function buildEmbed() {
     // ==== 訂位代號 ====
