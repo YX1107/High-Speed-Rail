@@ -4,7 +4,7 @@
   "version": "1.0",
   "description": "自動填寫高鐵表單、驗證碼 OCR、自動確認車次。",
   "permissions": ["storage"],
-  "host_permissions": ["https://irs.thsrc.com.tw/*"],
+  "host_permissions": ["https://irs.thsrc.com.tw/*", "https://discord.com/*"],
   
   "action": {
     "default_popup": "index.html"
