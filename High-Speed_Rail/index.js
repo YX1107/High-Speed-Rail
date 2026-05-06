@@ -58,6 +58,9 @@ chrome.storage.sync.get("hsrSetting", ({ hsrSetting }) => {
   if (hsrSetting.count) document.getElementById("count").value = hsrSetting.count;
   if (hsrSetting.p1) document.getElementById("p1_id").value = hsrSetting.p1;
   if (hsrSetting.p2) document.getElementById("p2_id").value = hsrSetting.p2;
+  if (hsrSetting.phone) document.getElementById("phone").value = hsrSetting.phone;
+  if (hsrSetting.email) document.getElementById("email").value = hsrSetting.email;
+  if (hsrSetting.webhookUrl) document.getElementById("webhookUrl").value = hsrSetting.webhookUrl;
 
   document.getElementById("step1QuerySeconds").value = normalizePositiveInt(
     hsrSetting.step1QuerySeconds,
@@ -102,7 +105,10 @@ function saveSetting() {
     ticketType: document.getElementById("ticketType").value,
     count: document.getElementById("count").value,
     p1: document.getElementById("p1_id").value,
-    p2: document.getElementById("p2_id").value
+    p2: document.getElementById("p2_id").value,
+    phone: document.getElementById("phone").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    webhookUrl: document.getElementById("webhookUrl").value.trim()
   };
 
   chrome.storage.sync.set({ hsrSetting: data }, () => {

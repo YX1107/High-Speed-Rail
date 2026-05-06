@@ -13,6 +13,8 @@ function startAutoBooking(hsrSetting) {
   let reloadScheduled = false;
   const step1QueryIntervalMs = toDelayMs(hsrSetting.step1QuerySeconds, 150);
   const step2ReloadDelayMs = toDelayMs(hsrSetting.step2ReloadSeconds, 150);
+  const contactPhone = (hsrSetting.phone || "").trim();
+  const contactEmail = (hsrSetting.email || "").trim();
 
   const timeMap = {
     "00:00": "1201A",
@@ -273,39 +275,29 @@ function startAutoBooking(hsrSetting) {
     agree.dispatchEvent(new Event("change", { bubbles: true }));
   }
 
-  const idInput = document.querySelector("#idNumber");
-  if (idInput) {
-    idInput.value = hsrSetting.p1;
-    idInput.dispatchEvent(new Event("change", { bubbles: true }));
+  function setInputValue(selector, value, eventNames = ["change"]) {
+    if (!value) return;
+
+    const input = document.querySelector(selector);
+    if (!input) return;
+
+    input.value = value;
+    eventNames.forEach((eventName) => {
+      input.dispatchEvent(new Event(eventName, { bubbles: true }));
+    });
   }
 
-  const phoneInput = document.querySelector("#mobilePhone");
-  if (phoneInput) {
-    phoneInput.value = "0921885703";
-    phoneInput.dispatchEvent(new Event("change", { bubbles: true }));
-  }
-
-  const emailInput = document.querySelector("#email");
-  if (emailInput) {
-    emailInput.value = "gm9111070@gmail.com";
-    emailInput.dispatchEvent(new Event("change", { bubbles: true }));
-  }
-
-  const p1 = document.querySelector(
-    "#BookingS3Form_TicketPassengerInfoInputPanel_passengerDataView_0_passengerDataView2_passengerDataIdNumber"
+  setInputValue("#idNumber", hsrSetting.p1);
+  setInputValue("#mobilePhone", contactPhone);
+  setInputValue("#email", contactEmail);
+  setInputValue(
+    "#BookingS3Form_TicketPassengerInfoInputPanel_passengerDataView_0_passengerDataView2_passengerDataIdNumber",
+    hsrSetting.p1
   );
-  if (p1) {
-    p1.value = hsrSetting.p1;
-    p1.dispatchEvent(new Event("change", { bubbles: true }));
-  }
-
-  const p2 = document.querySelector(
-    "#BookingS3Form_TicketPassengerInfoInputPanel_passengerDataView_1_passengerDataView2_passengerDataIdNumber"
+  setInputValue(
+    "#BookingS3Form_TicketPassengerInfoInputPanel_passengerDataView_1_passengerDataView2_passengerDataIdNumber",
+    hsrSetting.p2
   );
-  if (p2) {
-    p2.value = hsrSetting.p2;
-    p2.dispatchEvent(new Event("change", { bubbles: true }));
-  }
 
   const memberRadio = document.querySelector("#memberSystemRadio1");
   if (memberRadio) {
@@ -315,12 +307,7 @@ function startAutoBooking(hsrSetting) {
   }
 
   setTimeout(() => {
-    const msNumber = document.querySelector("#msNumber");
-    if (!msNumber) return;
-
-    msNumber.value = "0921885703";
-    msNumber.dispatchEvent(new Event("input", { bubbles: true }));
-    msNumber.dispatchEvent(new Event("change", { bubbles: true }));
+    setInputValue("#msNumber", contactPhone, ["input", "change"]);
   }, 300);
 
   (function submitFinalStep() {
