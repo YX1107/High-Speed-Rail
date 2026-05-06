@@ -166,7 +166,7 @@ function startAutoBooking(hsrSetting) {
       E: 3,
       P: 4
     };
-
+//F=全票,H = 孩童票,W = 愛心票,E = 敬老票,P = 大學生票
     const allTicketSelectors = [
       { sel: 'select[name="ticketPanel:rows:0:ticketAmount"]', code: "F" },
       { sel: 'select[name="ticketPanel:rows:1:ticketAmount"]', code: "H" },
@@ -203,7 +203,7 @@ function startAutoBooking(hsrSetting) {
         if (secInput.value.trim() !== "") {
           submitBtn.click();
         }
-      }, step1QueryIntervalMs);//蝚砌?甇??閰?
+      }, step1QueryIntervalMs);
     }
 
     const waitCaptcha = setInterval(() => {
